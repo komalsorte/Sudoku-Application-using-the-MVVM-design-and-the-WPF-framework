@@ -1,0 +1,378 @@
+﻿<Window x:Class="Sudoku.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sudoku"
+        mc:Ignorable="d"
+        Title="Sudoku Game">
+
+    <Window.Resources>
+
+        <Style x:Key="BorderStyle"
+               TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style x:Key="BorderLineStyle"
+               TargetType="Border"
+               BasedOn="{StaticResource BorderStyle}">
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Grid.ColumnSpan" Value="3" />
+            <Setter Property="Grid.RowSpan" Value="3" />
+            <Setter Property="Height" Value="134" />
+            <Setter Property="Width" Value="134" />
+        </Style>
+
+        <Style x:Key="HorizontalLines"
+               TargetType="Rectangle">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Stroke" Value="Gray" />
+            <Setter Property="Grid.ColumnSpan" Value="3"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Width" Value="134" />
+        </Style>
+
+        <Style x:Key="VerticalLines"
+               TargetType="Rectangle">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Stroke" Value="Gray" />
+            <Setter Property="Grid.RowSpan" Value="3"/>
+            <Setter Property="Height" Value="134"/>
+            <Setter Property="Width" Value="1" />
+        </Style>
+
+        <Style x:Key="GameGridStyle"
+               TargetType="Grid">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="10,10,0,0" />
+            <Setter Property="Height" Value="402" />
+            <Setter Property="Width" Value="402" />
+            <Setter Property="Panel.ZIndex" Value="2" />
+
+        </Style>
+
+    </Window.Resources>
+
+    <Canvas Margin="0,0,0,0"            
+            Height="500"
+            Width="600">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell00, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell01, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell02, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell10, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell11, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell12, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell20, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell21, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell22, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+            </Grid>
+
+            <Grid Grid.Row="0"
+                  Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell03, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell04, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell05, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell13, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell14, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell15, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell23, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell24, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell25, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            </Grid>
+
+            <Grid Grid.Row="0"
+                  Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell06, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell07, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell08, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell16, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell17, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell18, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell26, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell27, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell28, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell30, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell31, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell32, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell40, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell41, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell42, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell50, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell51, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell52, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell33, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell34, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell35, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell43, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell44, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell45, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell53, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell54, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell55, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell36, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell37, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell38, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell46, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell47, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell48, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell56, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell57, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell58, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell60, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell61, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell62, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell70, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell71, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell72, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell80, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell81, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell82, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell63, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell64, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell65, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell73, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell74, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell75, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell83, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell84, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell85, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Border Style="{StaticResource BorderLineStyle}" />
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="1"/>
+                <Rectangle Style="{StaticResource HorizontalLines}" Grid.Row="2"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
+                <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
+
+                <ContentControl Content="{Binding Path=Cell66, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell67, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell68, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell76, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell77, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell78, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Content="{Binding Path=Cell86, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell87, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Content="{Binding Path=Cell88, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+        </Grid>
+        <Button Content="New Puzzle" Canvas.Left="188" Canvas.Top="431" Click="btn_NewPuzzle"/>
+        <Button Content="Reveal" Canvas.Left="288" Canvas.Top="431"/>
+        <Button Content="Validate" Canvas.Left="356" Canvas.Top="431"/>
+    </Canvas>
+
+
+</Window>
