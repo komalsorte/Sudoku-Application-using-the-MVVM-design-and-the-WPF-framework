@@ -303,6 +303,8 @@ namespace Sudoku.Model
         /// Medium - 55% blank spaces
         /// Hard - 75% blank spaces
         /// </summary>
+
+        private Random myRand = new Random();
         private int[,] ReplaceCellsWithSpaces(int blankSpaces, int[,] b = null)
         {
             if (blankSpaces == 0)
@@ -319,9 +321,8 @@ namespace Sudoku.Model
                 }
             }
             bool foundSpace = false;
-            Random rand = new Random();
-            int rx = rand.Next(0, 8);
-            int ry = rand.Next(0, 8);
+            int rx = myRand.Next(0, 8);
+            int ry = myRand.Next(0, 8);
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
