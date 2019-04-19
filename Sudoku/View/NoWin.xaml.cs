@@ -17,17 +17,25 @@ using System.Windows.Shapes;
 /// Author: Komal Sorte
 /// Project 2 Phase 2 : Generate Sudoku puzzle using backtracking, pruning.
 /// </summary>
-/// 
 namespace Sudoku.View
 {
     /// <summary>
-    /// Interaction logic for DifficultyLevel.xaml
+    /// Interaction logic for NoWin.xaml
     /// </summary>
-    public partial class DifficultyLevel : Window
+    /// 
+   
+    public partial class NoWin : Window
     {
         public SudokuViewModel _viewModel;
+        #region
+        public NoWin(SudokuViewModel viewModel)
+        {
+            InitializeComponent();
+            _viewModel = viewModel;
+        }
+        #endregion
 
-        #region . Constructor
+        
         internal SudokuViewModel PuzzleViewModel
         {
             get
@@ -40,40 +48,21 @@ namespace Sudoku.View
                 this.DataContext = value;                       // Set the datacontext of the WPF form to the view model.
             }
         }
-        #endregion
 
-        #region . Methods
-        public DifficultyLevel(SudokuViewModel viewModel)
-        {
-            InitializeComponent();
-            _viewModel = viewModel;
-        }
-        /// <summary>
-        /// OnClick action for easy level
-        /// </summary>
-        private void btn_DifficultyEasy(object sender, RoutedEventArgs e)
-        {
-            PuzzleViewModel.Difficulty = "Easy";
-            this.Close();
-        }
+        #region . Form Event Handlers .
 
         /// <summary>
-        /// OnClick action for medium level
+        /// OnClick action for OK button
         /// </summary>
-        private void btn_DifficultyMedium(object sender, RoutedEventArgs e)
+        private void btn_ClickOK(object sender, RoutedEventArgs e)
         {
-            PuzzleViewModel.Difficulty = "Medium";
-            this.Close();
+            this.Close();                           
         }
 
-        /// <summary>
-        /// OnClick action for hard level
-        /// </summary>
-        private void btn_DifficultyHard(object sender, RoutedEventArgs e)
-        {
-            PuzzleViewModel.Difficulty = "Hard";
-            this.Close();
-        }
         #endregion
     }
+
+    
+
+
 }

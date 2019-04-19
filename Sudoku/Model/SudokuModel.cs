@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 /// <summary>
 /// Author: Komal Sorte
-/// Project 2 Phase 1 : Generate Sudoku puzzle using backtracking, pruning.
+/// Project 2 Phase 2 : Generate Sudoku puzzle using backtracking, pruning.
 /// </summary>
 /// 
 
@@ -27,8 +27,9 @@ namespace Sudoku.Model
 
         public delegate void PuzzleGeneratorHandler(SudokuModel puzzle, String msg);
 
-        public event PuzzleGeneratorHandler GeneratePuzzleEvent;
+        //public event PuzzleGeneratorHandler GeneratePuzzleEvent;
 
+        #region . Properties
         public static int[,] Board => board;
 
         public int BoardRows
@@ -51,6 +52,16 @@ namespace Sudoku.Model
 
         public int[,] PuzzleBoard => board;
 
+        public int[,] PuzzleSolution => boardSol;
+
+        #endregion
+
+        #region . Constructor
+        public SudokuModel()
+        {
+
+
+        }
         public SudokuModel(string size, string difficulty)
         {
             SanityCheck(Int32.Parse(size), difficulty);
@@ -58,6 +69,9 @@ namespace Sudoku.Model
 
         }
 
+        #endregion
+
+        #region . Methods
         /// <summary>
         /// Checks if supplied arguments i.e. the size and difficulty level 
         /// of the puzzle board are valid. Else throws an InvalidArgumentException
@@ -97,75 +111,39 @@ namespace Sudoku.Model
         /// </summary>
         public void GenerateSudokuPuzzle()
         {
-            bool success = false;
             int[,] boardTemp = new int[BoardRows, BoardCols];
-            //string msg;
             generateSolution();
-            //msg = "Generating " + boardRows + " X " + boardCols + " Sudoku Solution...";
-            //GeneratePuzzleEvent?.Invoke(this, msg);
-
-
             //Storing solution
             for (int row = 0; row < BoardRows; row++)
-            {
                 for (int col = 0; col < BoardCols; col++)
-                {
                     boardSol[row, col] = board[row, col];
+
+
+
+            //generating puzzle
+            setDifficultyOnSolution();
+
+            string puzzleText = "";
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+
+                    if (board[row, col] == 0)
+                        puzzleText = puzzleText + ".";
+                    else
+                        puzzleText = puzzleText + board[row, col];
                 }
             }
 
-            int count = 1;
-            do
-            {
-                //generating puzzle
-                setDifficultyOnSolution();
-                //msg = "Generated " + boardRows + " X " + boardCols + " Sudoku Puzzle...";
-                //GeneratePuzzleEvent?.Invoke(this, msg);
-
-                //Storing puzzle 
-                for (int row = 0; row < BoardRows; row++)
-                {
-                    for (int col = 0; col < BoardCols; col++)
-                    {
-                        boardTemp[row, col] = board[row, col];
-                    }
-                }
-
-                //passing the puzzle to function to validate if the new solution matches the original solution
-                //msg = "Validating " + boardRows + " X " + boardCols + " Sudoku Puzzle...";
-                validateSolution();
-
-                if (isEqual(boardSol))
-                {
-                    //GeneratePuzzleEvent?.Invoke(this, msg + count);
-                    success = true;
-
-                    //Checks: To be removed
-                    Console.WriteLine(isEqual(boardSol));
-                    Console.WriteLine(isEqual(boardSol));
-                    Console.WriteLine(isEqual(boardSol));
-
-                    board = boardTemp;
-                    //msg = "Generated " + boardRows + " X " + boardCols + " Sudoku Puzzle...";
-                    //GeneratePuzzleEvent?.Invoke(this, msg);
-
-                }
-                else
-                {
-                    count++;
-                    for (int row = 0; row < BoardRows; row++)
-                    {
-                        for (int col = 0; col < BoardCols; col++)
-                        {
-                            board[row, col] = boardSol[row, col];
-                        }
-                    }
-                }
-
-            } while (!success);
 
         }
 
+        /// <summary>
+        /// Comapres two boards
+        /// </summary>
+        /// <param name="boardSol"></param>
+        /// <returns>True if equal</returns>
         private bool isEqual(int[,] boardSol)
         {
             for (int row = 0; row < BoardRows; row++)
@@ -278,7 +256,45 @@ namespace Sudoku.Model
             else
                 Console.WriteLine("Invalid difficulty type");
 
-            ReplaceCellsWithSpaces(blankSpaces);
+            int[,] tmp = null;
+            for (int tryCount = 0; tryCount < 9 * 9; tryCount++)
+            {
+                tmp = ReplaceCellsWithSpaces(blankSpaces);
+                if (tmp != null)
+                {
+                    board = tmp;
+                    break;
+                }
+            }
+        }
+
+        
+        private int PossibleCellCount(int[,] board, int x, int y)
+        {
+            if (board[x, y] == 0) return 0;
+            HashSet<int> numbersPresent = new HashSet<int>();
+            //  check along y (fixed x)
+            for (int i = 0; i < 9; i++)
+            {
+                numbersPresent.Add(board[x, i]);
+            }
+            //  check along x (fixed y)
+            for (int i = 0; i < 9; i++)
+            {
+                numbersPresent.Add(board[i, y]);
+            }
+            //  check in current sub box
+            int subX = (x / 3) * 3, subY = (y / 3) * 3;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    numbersPresent.Add(board[subX + i, subY + j]);
+                }
+            }
+            numbersPresent.Remove(DEFAULT);
+            numbersPresent.Remove(board[x, y]);
+            return 9 - numbersPresent.Count();
         }
 
         /// <summary>
@@ -287,19 +303,47 @@ namespace Sudoku.Model
         /// Medium - 55% blank spaces
         /// Hard - 75% blank spaces
         /// </summary>
-        private void ReplaceCellsWithSpaces(int blankSpaces)
+        private int[,] ReplaceCellsWithSpaces(int blankSpaces, int[,] b = null)
         {
-            Random rand = new Random();
-            while (blankSpaces != 0)
+            if (blankSpaces == 0)
+                return b;
+            if (b == null)
             {
-                int randomRow = rand.Next(BoardRows);
-                int randomCol = rand.Next(BoardCols);
-                if (board[randomRow, randomCol] != DEFAULT)
+                b = new int[9, 9];
+                for (int i = 0; i < 9; i++)
                 {
-                    board[randomRow, randomCol] = DEFAULT;
-                    blankSpaces -= 1;
+                    for (int j = 0; j < 9; j++)
+                    {
+                        b[i, j] = board[i, j];
+                    }
                 }
             }
+            bool foundSpace = false;
+            Random rand = new Random();
+            int rx = rand.Next(0, 8);
+            int ry = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    if (PossibleCellCount(b, (rx + i) % 9, (ry + j) % 9) == 1)
+                    {
+                        foundSpace = true;
+                        b[(rx + i) % 9, (ry + j) % 9] = DEFAULT;
+                        Console.WriteLine("BLANKED (" + (rx + i) % 9 + "," + (ry + j) % 9 + ")");
+                        break;
+                    }
+                }
+                if (foundSpace)
+                {
+                    break;
+                }
+            }
+            if (!foundSpace)
+            {
+                return null;
+            }
+            return ReplaceCellsWithSpaces(blankSpaces - 1, b);
         }
 
         /// <summary>
@@ -353,38 +397,47 @@ namespace Sudoku.Model
             return false;
         }
 
-        private bool validateSolution()
-        {
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    if (board[row, col] == DEFAULT)
-                    {
-                        for (int number = 1; number <= 9; number++)
-                        {
-                            bool flag = !(CheckInRow(row, number) || CheckInCol(col, number) || CheckInBlock(row, col, number));
-                            if (flag)
-                            {
-                                board[row, col] = number;
-                                if (validateSolution())
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    board[row, col] = DEFAULT;
-                                }
-                            }
-                        }
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+
+        /// <summary>
+        /// Validates Solution and generates solution for given puzzle.
+        /// </summary>
+        /// <returns>True if solution generated successfully</returns>
+        //private bool validateSolution()
+        //{
+        //    for (int row = 0; row < 9; row++)
+        //    {
+        //        for (int col = 0; col < 9; col++)
+        //        {
+        //            if (board[row, col] == DEFAULT)
+        //            {
+        //                for (int number = 1; number <= 9; number++)
+        //                {
+        //                    bool flag = !(CheckInRow(row, number) || CheckInCol(col, number) || CheckInBlock(row, col, number));
+        //                    if (flag)
+        //                    {
+        //                        board[row, col] = number;
+        //                        if (validateSolution())
+        //                        {
+        //                            return true;
+        //                        }
+        //                        else
+        //                        {
+        //                            board[row, col] = DEFAULT;
+        //                        }
+        //                    }
+        //                }
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //    return true;
+        //}
+        #endregion
     }
 
+
+
+    #region . Exception
     /// <summary>
     /// An exception used to indicate a problem that an invalid argument was entered
     /// This exception is thrown if one of the following condition occurs:
@@ -410,4 +463,6 @@ namespace Sudoku.Model
         }
 
     }
+    #endregion
+
 }

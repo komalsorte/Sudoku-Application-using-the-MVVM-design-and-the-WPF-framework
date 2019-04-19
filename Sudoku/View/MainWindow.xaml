@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sudoku"
         mc:Ignorable="d"
-        Title="Sudoku Game">
+        Title="Sudoku Game"
+        Height="600"
+        Width="450">
 
     <Window.Resources>
 
@@ -14,6 +16,38 @@
             <Setter Property="BorderBrush" Value="Gray" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Background" Value="#3F3F46" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Background" Value="#3F3F46" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="#3F3F46" />
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
         <Style x:Key="BorderLineStyle"
@@ -48,24 +82,24 @@
             <Setter Property="Width" Value="1" />
         </Style>
 
-        <Style x:Key="GameGridStyle"
-               TargetType="Grid">
+        <Style x:Key="PuzzleBoard" TargetType="Grid">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Margin" Value="10,10,0,0" />
             <Setter Property="Height" Value="402" />
             <Setter Property="Width" Value="402" />
             <Setter Property="Panel.ZIndex" Value="2" />
+            <Setter Property="Background" Value="#3F3F46" />
 
         </Style>
 
     </Window.Resources>
 
-    <Canvas Margin="0,0,0,0"            
+    <Canvas Margin="0,62,0,0"
             Height="500"
-            Width="600">
-
-        <Grid>
+            Width="420">
+        <TextBlock Text="Play Sudoku" Height="34" Canvas.Left="107" Canvas.Top="-49" Width="195" />
+        <Grid Style="{StaticResource PuzzleBoard}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -96,18 +130,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell00, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell01, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell02, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell00, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled00}" x:Uid="00" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell01, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled01}" x:Uid="01" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell02, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled02}" x:Uid="02" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell10, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell11, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell12, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell10, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled10}" x:Uid="10" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell11, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled11}" x:Uid="11" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell12, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled12}" x:Uid="12" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell20, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell21, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell22, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell20, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled20}" x:Uid="20" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell21, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled21}" x:Uid="21" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell22, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled22}" x:Uid="22" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
             </Grid>
 
@@ -130,17 +182,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell03, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell04, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell05, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell03, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled03}" x:Uid="03" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell04, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled04}" x:Uid="04" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell05, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled05}" x:Uid="05" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell13, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell14, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell15, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell13, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled13}" x:Uid="13" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell14, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled14}" x:Uid="14" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell15, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled15}" x:Uid="15" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell23, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell24, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell25, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell23, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled23}" x:Uid="23" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell24, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled24}" x:Uid="24" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell25, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled25}" x:Uid="25" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
             </Grid>
 
@@ -163,17 +234,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell06, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell07, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell08, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell06, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled06}" x:Uid="06" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell07, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled07}" x:Uid="07" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell08, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled08}" x:Uid="08" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell16, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell17, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell18, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell16, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled16}" x:Uid="16" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell17, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled17}" x:Uid="17" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell18, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled18}" x:Uid="18" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell26, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell27, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell28, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell26, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled26}" x:Uid="26" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell27, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled27}" x:Uid="27" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell28, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled28}" x:Uid="28" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
             </Grid>
 
             <Grid Grid.Row="1"
@@ -195,17 +285,37 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell30, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell31, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell32, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell30, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled30}" x:Uid="30" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell31, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled31}" x:Uid="31" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell32, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled32}" x:Uid="32" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell40, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell41, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell42, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell40, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled40}" x:Uid="40" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell41, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled41}" x:Uid="41" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell42, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled42}" x:Uid="42" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell50, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell51, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell52, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell50, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled50}" x:Uid="50" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell51, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled51}" x:Uid="51" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell52, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled52}" x:Uid="52" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+
             </Grid>
 
             <Grid Grid.Row="1"
@@ -227,17 +337,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell33, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell34, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell35, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell33, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled33}" x:Uid="33" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell34, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled34}" x:Uid="34" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell35, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled35}" x:Uid="35" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell43, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell44, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell45, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell43, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled43}" x:Uid="43" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell44, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled44}" x:Uid="44" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell45, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled45}" x:Uid="45" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell53, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell54, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell55, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell53, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled53}" x:Uid="53" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell54, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled54}" x:Uid="54" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell55, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled55}" x:Uid="55" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
             </Grid>
 
             <Grid Grid.Row="1"
@@ -259,17 +388,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell36, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell37, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell38, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell36, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled36}" x:Uid="36" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell37, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled37}" x:Uid="37" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell38, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled38}" x:Uid="38" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell46, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell47, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell48, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell46, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled46}" x:Uid="46" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell47, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled47}" x:Uid="47" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell48, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled48}" x:Uid="48" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell56, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell57, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell58, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell56, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled56}" x:Uid="56" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell57, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled57}" x:Uid="57" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell58, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled58}" x:Uid="58" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
             </Grid>
 
             <Grid Grid.Row="2"
@@ -291,17 +439,37 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell60, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell61, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell62, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell60, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled60}" x:Uid="60" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell61, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled61}" x:Uid="61" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell62, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled62}" x:Uid="62" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell70, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell71, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell72, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell70, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled70}" x:Uid="70" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell71, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled71}" x:Uid="71" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell72, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled72}" x:Uid="72" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell80, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell81, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell82, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell80, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled80}" x:Uid="80" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell81, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled81}" x:Uid="81" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell82, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled82}" x:Uid="82" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+
             </Grid>
 
             <Grid Grid.Row="2"
@@ -323,17 +491,36 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell63, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell64, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell65, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell63, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled63}" x:Uid="63" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell64, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled64}" x:Uid="64" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell65, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled65}" x:Uid="65" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell73, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell74, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell75, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell73, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled73}" x:Uid="73" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell74, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled74}" x:Uid="74" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell75, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled75}" x:Uid="75" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell83, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell84, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell85, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell83, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled83}" x:Uid="83" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell84, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled84}" x:Uid="84" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell85, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled85}" x:Uid="85" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
             </Grid>
 
             <Grid Grid.Row="2"
@@ -355,23 +542,43 @@
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="1"/>
                 <Rectangle Style="{StaticResource VerticalLines}" Grid.Column="2"/>
 
-                <ContentControl Content="{Binding Path=Cell66, Mode=OneWay}"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell67, Mode=OneWay}"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell68, Mode=OneWay}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell66, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled66}" x:Uid="66" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell67, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled67}" x:Uid="67" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell68, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled68}" x:Uid="68" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell76, Mode=OneWay}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell77, Mode=OneWay}"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell78, Mode=OneWay}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell76, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled76}" x:Uid="76" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell77, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled77}" x:Uid="77" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell78, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled78}" x:Uid="78" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
 
-                <ContentControl Content="{Binding Path=Cell86, Mode=OneWay}"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell87, Mode=OneWay}"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ContentControl Content="{Binding Path=Cell88, Mode=OneWay}"  Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                <ContentControl Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell86, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled86}" x:Uid="86" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell87, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled87}" x:Uid="87" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
+                <ContentControl Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBox Text="{Binding Cell88, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding isEnabled88}" x:Uid="88" GotFocus="txtBx_OnGotFocus" />
+                </ContentControl>
             </Grid>
 
         </Grid>
-        <Button Content="New Puzzle" Canvas.Left="188" Canvas.Top="431" Click="btn_NewPuzzle"/>
-        <Button Content="Reveal" Canvas.Left="288" Canvas.Top="431"/>
-        <Button Content="Validate" Canvas.Left="356" Canvas.Top="431"/>
+        <Button Content="New Puzzle" Canvas.Left="107" Canvas.Top="431" Click="btn_NewPuzzle" />
+        <Button Content="Reveal" Canvas.Left="222" Canvas.Top="431" Click="btn_Reveal" IsEnabled="{Binding isButtonEnabled}"/>
+        <Button Content="Validate" Canvas.Left="330" Canvas.Top="431"  Click="btn_ValidatePuzzle" IsEnabled="{Binding isButtonEnabled}"/>
+        <Button Content="Save Puzzle" Canvas.Top="431" Click="btn_SavePuzzle" Canvas.Left="10" IsEnabled="{Binding isButtonEnabled}"/>
     </Canvas>
 
 

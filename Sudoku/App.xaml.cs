@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using Sudoku.ViewModel;
 
+/// <summary>
+/// Author: Komal Sorte
+/// Project 2 Phase 2 : Generate Sudoku puzzle using backtracking, pruning.
+/// </summary>
 namespace Sudoku
 {
     /// <summary>
