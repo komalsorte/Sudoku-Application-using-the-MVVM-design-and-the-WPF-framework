@@ -15,30 +15,4 @@ o Medium - 55% of spaces are blank\
 o Hard - 75% of spaces are blank\
 Once the solution is generated, the program randomly selects spaces in the puzzle to make them blank based on the rules above.\
 The following is output from a hard 9x9 puzzle:\
-![Image description](https://github.com/komalsorte/Sudoku-Application-using-the-MVVM-design-and-the-WPF-framework/blob/master/Sudoku/SudokuBackend.png)
---------+-------+--------\
-| 1 3 4 | 9 7 8 | 2 5 6 |\
-| 8 7 6 | 2 3 5 | 1 4 9 |\
-| 2 5 9 | 1 4 6 | 3 8 7 |\
---------+-------+--------\
-| 6 9 3 | 4 5 2 | 7 1 8 |\
-| 4 1 2 | 8 6 7 | 9 3 5 |\
-| 5 8 7 | 3 1 9 | 6 2 4 |\
---------+-------+--------\
-| 9 2 1 | 7 8 4 | 5 6 3 |\
-| 7 4 5 | 6 2 3 | 8 9 1 |\
-| 3 6 8 | 5 9 1 | 4 7 2 |\
---------+-------+--------\
---------+-------+--------\
-| X 3 X | X X X | 2 X X |\
-| 8 7 X | 2 X X | 1 X X |\
-| X X 9 | 1 X 6 | X X X |\
---------+-------+--------\
-| X X X | 4 X X | X X X |\
-| X X X | X X X | X 3 5 |\
-| X X X | X X 9 | X 2 X |\
---------+-------+--------\
-| X X 1 | X 8 X | X 6 3 |\
-| X X 5 | X X X | X X X |\
-| X X X | X X 1 | 4 X X |\
---------+-------+--------
+<img src="https://github.com/komalsorte/Sudoku-Application-using-the-MVVM-design-and-the-WPF-framework/blob/master/Sudoku/SudokuBackend.png" width="30%" height="30%" />
