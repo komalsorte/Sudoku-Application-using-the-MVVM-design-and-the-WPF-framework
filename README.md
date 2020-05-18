@@ -15,7 +15,7 @@ o Medium - 55% of spaces are blank\
 o Hard - 75% of spaces are blank\
 Once the solution is generated, the program randomly selects spaces in the puzzle to make them blank based on the rules above.\
 The following is output from a hard 9x9 puzzle:\
-![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+![Image description](https://github.com/komalsorte/Sudoku-Application-using-the-MVVM-design-and-the-WPF-framework/blob/master/Sudoku/SudokuBackend.png)
 --------+-------+--------\
 | 1 3 4 | 9 7 8 | 2 5 6 |\
 | 8 7 6 | 2 3 5 | 1 4 9 |\
